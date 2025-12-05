@@ -102,3 +102,4 @@ function create(tag, cls = "") {
   if (cls) el.className = cls;
   return el;
 }
+
