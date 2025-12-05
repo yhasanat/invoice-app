@@ -3,7 +3,7 @@
 ------------------------------------------*/
 
 // رابط WebApp الأساسي
-const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzetSfs5y04p514AVEenPEV10VrgrkbtGnQqztKgLIAQa3OQuVqo89kRHXf3DClSOLZ/exec";
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzEUodzZASGBImxpseZ_CsJMOuc57ISU5b7dqHc8jSEzhlo4iMvdCRO8Jq7tSeepTjh/exec";
 
 // رقم الفاتورة (Cache محلي)
 function getNextInvoiceNumber() {
@@ -102,4 +102,5 @@ function create(tag, cls = "") {
   if (cls) el.className = cls;
   return el;
 }
+
 
