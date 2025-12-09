@@ -2,13 +2,10 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <title>ابو طعيمة للملابس - SPA</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/style.css">
+  <title>نظام فواتير ومخزون - SheetDB + مخزون ديناميكي</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
-
 <body>
 <div class="app-shell">
   <header>
@@ -16,7 +13,7 @@
       <div class="brand-logo"></div>
       <div>
         <div>نظام الفواتير والمخزون</div>
-        <div class="brand-sub">متوافق مع الجوال والكمبيوتر - SPA</div>
+        <div class="brand-sub">مخزون ديناميكي بدون عمود stock - SheetDB + أوفلاين</div>
       </div>
     </div>
     <nav class="nav-buttons">
@@ -29,7 +26,7 @@
   </header>
 
   <main>
-    <!-- فاتورة الزبون (مفرق) -->
+    <!-- فاتورة الزبون -->
     <section id="view-invoice-retail" class="view active">
       <div class="page-title">
         فاتورة الزبون
@@ -82,7 +79,7 @@
 
           <div class="chip-row">
             <span class="chip">Enter لإضافة الصنف من حقل الباركود</span>
-            <span class="chip">في البحث المتقدم: اسم الصنف أو #وجزء من الباركود</span>
+            <span class="chip">في البحث المتقدم: اكتب الاسم أو # وجزء من الباركود</span>
           </div>
 
           <div class="table-wrapper">
@@ -153,21 +150,20 @@
             </div>
           </div>
 
-          <!-- قسم الأصناف السريعة (3 ثابتة + 9 أعلى مبيعاً) -->
           <h4 class="quick-title">اختصارات الأصناف</h4>
           <div id="retail-quick-box" class="quick-products-box"></div>
         </aside>
       </div>
     </section>
 
-    <!-- فاتورة التاجر (جملة) -->
+    <!-- فاتورة التاجر -->
     <section id="view-invoice-wholesale" class="view">
       <div class="page-title">
         فاتورة التاجر
         <span class="pill">بيع جملة</span>
       </div>
       <div class="page-subtitle">
-        نفس خصائص فاتورة الزبون مع سعر الجملة المقترح.
+        نفس خصائص فاتورة الزبون مع أسعار الجملة.
       </div>
 
       <div class="layout-flex">
@@ -212,7 +208,7 @@
           </div>
 
           <div class="chip-row">
-            <span class="chip">السعر مقترح من عمود سعر الجملة</span>
+            <span class="chip">السعر من عمود سعر الجملة في الأصناف</span>
           </div>
 
           <div class="table-wrapper">
@@ -293,7 +289,7 @@
         <span class="pill">زبون / تاجر</span>
       </div>
       <div class="page-subtitle">
-        عرض الحركات كاملة أو ضمن فترة زمنية محددة.
+        عرض الحركات كاملة أو ضمن فترة زمنية محددة مع إمكانية الطباعة A4.
       </div>
 
       <div class="card">
@@ -323,6 +319,9 @@
           </div>
           <div class="form-field narrow align-bottom">
             <button class="btn" id="btn-st-run">عرض كشف الحساب</button>
+          </div>
+          <div class="form-field narrow align-bottom">
+            <button class="btn secondary" id="btn-st-print">طباعة كشف الحساب</button>
           </div>
         </div>
 
@@ -364,11 +363,12 @@
       </div>
     </section>
 
-    <!-- إدارة الأصناف والمخزون -->
+    <!-- إدارة الأصناف -->
     <section id="view-stock" class="view">
       <div class="page-title">إدارة الأصناف والمخزون</div>
       <div class="page-subtitle">
-        إضافة صنف جديد أو تحديث كمية لصنف موجود مع تحديد مصدر البضاعة.
+        إضافة صنف جديد أو تحديث كمية لصنف موجود مع تسجيل حركة المخزون في SheetDB.
+        المخزون المعروض يحسب ديناميكياً من StockUpdates و InvoiceItems.
       </div>
 
       <div class="card">
@@ -415,14 +415,14 @@
         </div>
 
         <div class="actions-row">
-          <button class="btn" id="btn-stock-save">حفظ / تحديث الصنف</button>
+          <button class="btn" id="btn-stock-save">حفظ / تسجيل حركة مخزون</button>
         </div>
 
         <hr class="divider">
 
         <div class="card-header small-padding">
           <div class="card-title">قائمة الأصناف</div>
-          <div class="card-meta">بحث سريع بالاسم أو الباركود</div>
+          <div class="card-meta">بحث سريع بالاسم أو الباركود (المخزون يحسب تلقائياً)</div>
         </div>
         <div class="form-row">
           <div class="form-field">
@@ -438,7 +438,7 @@
               <th>الاسم</th>
               <th>المفرق</th>
               <th>الجملة</th>
-              <th>المخزون</th>
+              <th>المخزون الحالي</th>
             </tr>
             </thead>
             <tbody></tbody>
@@ -451,7 +451,7 @@
     <section id="view-dashboard" class="view">
       <div class="page-title">لوحة التحكم</div>
       <div class="page-subtitle">
-        ملخص سريع للمبيعات وعدد الفواتير وحالة المخزون.
+        ملخص سريع للمبيعات وعدد الفواتير وحالة المخزون (يستخدم المخزون الديناميكي).
       </div>
 
       <div class="dashboard-grid">
@@ -469,31 +469,27 @@
         </div>
         <div class="card">
           <div class="stat-value" id="db-low-stock">0</div>
-          <div class="stat-label">أصناف مخزونها قليل</div>
+          <div class="stat-label">أصناف مخزونها قليل (&lt; 5)</div>
         </div>
-<div style="margin-top:15px; display:flex; gap:10px; flex-wrap:wrap;">
-  <button class="btn" id="btn-update-balances">تحديث أرصدة العملاء</button>
-  <button class="btn secondary" id="btn-recalc-stock">إعادة احتساب المخزون</button>
-  <button class="btn danger" id="btn-full-sync">مزامنة كاملة Full Sync</button>
-</div>
+      </div>
 
+      <div style="margin-top:15px; display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn" id="btn-update-balances">توضيح احتساب الأرصدة</button>
+        <button class="btn secondary" id="btn-recalc-stock">تحديث عرض المخزون من SheetDB</button>
+        <button class="btn danger" id="btn-full-sync">مزامنة البيانات المعلقة (أوفلاين) مع SheetDB</button>
       </div>
     </section>
   </main>
 </div>
 
-<!-- منطقة الطباعة الحرارية -->
+<!-- منطقة الطباعة (فاتورة حرارية + كشف حساب A4) -->
 <div id="print-area">
   <div class="receipt" id="receipt-content"></div>
 </div>
 
-<!-- قائمة الأسماء -->
 <datalist id="customers-list"></datalist>
-
-<!-- Dropdown واحد للبحث المتقدم -->
 <div id="search-suggestions" class="search-dropdown hidden"></div>
 
-<!-- JS -->
 <script src="assets/js/utils.js"></script>
 <script src="assets/js/data.js"></script>
 <script src="assets/js/invoice.js"></script>
